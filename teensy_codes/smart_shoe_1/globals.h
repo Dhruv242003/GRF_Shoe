@@ -1,21 +1,21 @@
 //################################### IMU_ICM_20948 #####################################
-#include "ICM_20948.h" 
+#include "ICM_20948.h"
 
 #define SERIAL_PORT Serial  //Default Serial port for printing
-#define CS_PIN 2     
-#define WIRE_PORT Wire1   // Using 2nd (SCL1, SDA2) I2C bus of teensy 4.1
+#define CS_PIN 2
+#define WIRE_PORT Wire1  // Using 2nd (SCL1, SDA2) I2C bus of teensy 4.1
 #define AD0_VAL 1
 
-ICM_20948_I2C myICM;    // IMU Obj
+ICM_20948_I2C myICM;  // IMU Obj
 
 //################################### Pressure_Sensor #####################################
 
-#include<Wire.h>
+#include <Wire.h>
 #include <SparkFun_MicroPressure.h>
 
-#define PCAADDR 0x70    // Default gateway address of I2C Multiplixer
+#define PCAADDR 0x70  // Default gateway address of I2C Multiplixer
 
-SparkFun_MicroPressure mpr0;   // Pressure Sensor obj
+SparkFun_MicroPressure mpr0;  // Pressure Sensor obj
 SparkFun_MicroPressure mpr1;
 SparkFun_MicroPressure mpr2;
 SparkFun_MicroPressure mpr3;
@@ -39,7 +39,7 @@ File file;
 char fileName[22] = FILE_BASE_NAME "00.csv";
 float cTime;
 
-// int avg_size = 10; 
+// int avg_size = 10;
 // static int baseline_value_1;
 // static int baseline_value_2;
 // static int baseline_value_3;

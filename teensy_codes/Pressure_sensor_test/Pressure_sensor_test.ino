@@ -3,6 +3,8 @@
 
 #define PCAADDR 0x70
 
+#define SENSOR 1
+
 void pcaselect(uint8_t i) {
   if (i > 3) return;
  
@@ -22,7 +24,7 @@ void setup() {
 
   Serial.println("\nMicro Pressure Sensor test !!");
 
-  pcaselect(0);
+  pcaselect(SENSOR);
 
   mpr.begin();
 
@@ -35,7 +37,7 @@ void setup() {
 }
 
 void loop() {
-  pcaselect(0);
+  pcaselect(SENSOR);
   
   Serial.print(mpr.readPressure(),4);
   Serial.println(" PSI");

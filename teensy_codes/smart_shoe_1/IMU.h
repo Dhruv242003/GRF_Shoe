@@ -9,8 +9,7 @@ void printScaledAGMT(ICM_20948_I2C *sensor);
 
 
 void IMU_setup() {
-  while (!SERIAL_PORT) {
-  };
+
   WIRE_PORT.begin();
   WIRE_PORT.setClock(400000);
 
@@ -21,11 +20,13 @@ void IMU_setup() {
 
 
     myICM.begin(WIRE_PORT, AD0_VAL);
+    if (SERIAL) {
+      SERIAL_PORT.print(F("Initialization of the sensor returned: "));
+      SERIAL_PORT.println(myICM.statusString());
+    }
 
-    SERIAL_PORT.print(F("Initialization of the sensor returned: "));
-    SERIAL_PORT.println(myICM.statusString());
     if (myICM.status != ICM_20948_Stat_Ok) {
-      SERIAL_PORT.println("Trying again...");
+      if (SERIAL) SERIAL_PORT.println("Trying again...");
       delay(500);
     } else {
       initialized = true;
@@ -50,23 +51,25 @@ void IMU_setup() {
 // }
 
 
-void IMU_reading(){
-  if (myICM.dataReady())
-    {
-      myICM.getAGMT();              // The values are only updated when you call 'getAGMT'
-      gyroX = myICM.gyrX();   gyroY = myICM.gyrY();   gyroZ = myICM.gyrZ();
-      accX  = myICM.accX();   accY  = myICM.accY();   accZ  = myICM.accZ();
-    }
+void IMU_reading() {
+  if (myICM.dataReady()) {
+    myICM.getAGMT();  // The values are only updated when you call 'getAGMT'
+    gyroX = myICM.gyrX();
+    gyroY = myICM.gyrY();
+    gyroZ = myICM.gyrZ();
+    accX = myICM.accX();
+    accY = myICM.accY();
+    accZ = myICM.accZ();
+  }
 
-   //X_norm = (X - X_min) / (X_max - X_min)
-   
-//  float accX_n = (accX + 16000)/32000;
-//  float accY_n = (accY + 16000)/32000;
-//  float accZ_n = (accZ + 16000)/32000;
-//  float gyroX_n = (gyroX + 2000)/4000;
-//  float gyroY_n = (gyroY + 2000)/4000;
-//  float gyroZ_n = (gyroZ + 2000)/4000;
+  //X_norm = (X - X_min) / (X_max - X_min)
 
+  //  float accX_n = (accX + 16000)/32000;
+  //  float accY_n = (accY + 16000)/32000;
+  //  float accZ_n = (accZ + 16000)/32000;
+  //  float gyroX_n = (gyroX + 2000)/4000;
+  //  float gyroY_n = (gyroY + 2000)/4000;
+  //  float gyroZ_n = (gyroZ + 2000)/4000;
 }
 
 
