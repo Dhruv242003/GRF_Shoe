@@ -37,7 +37,7 @@ const int chipSelect = BUILTIN_SDCARD;  // Teensy 4.1 SD card built-in CS pin
 File file;
 #define FILE_BASE_NAME "DATA"
 char fileName[22] = FILE_BASE_NAME "00.csv";
-float cTime;
+
 
 // int avg_size = 10;
 // static int baseline_value_1;

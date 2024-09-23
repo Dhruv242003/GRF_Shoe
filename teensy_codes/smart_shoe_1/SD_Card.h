@@ -72,8 +72,7 @@ void Write_SDcard() {
   file = SD.open(fileName, FILE_WRITE);
   if (file) {
     // if (SERIAL) Serial.println("Inside SD write");
-
-    file.print((cTime));
+    file.print((millis()-syncedTime-interval));
     file.print(",");
 
     file.print((p[0]));

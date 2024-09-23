@@ -1,9 +1,19 @@
 #define SERIAL 0
 
+unsigned long cTime;
+unsigned long previousTime = 0;
+const int samplingFrequency = 200;
+unsigned long interval = 1000 / samplingFrequency;
+unsigned long syncedTime;
+
 #include "globals.h"
 #include "IMU.h"
 #include "Pressure_Sensor.h"
 #include "SD_Card.h"
+
+#define SYNC_PIN 20
+int sync;
+
 
 void serial_plot() {
   Serial.print(p[0]);
@@ -21,9 +31,12 @@ void serial_plot() {
 
 
 void setup() {
+
   if (SERIAL) {
     SERIAL_PORT.begin(115200);
   }
+
+  pinMode(SYNC_PIN, INPUT);
 
   SD_Setup();
   create_new_file();
@@ -33,20 +46,42 @@ void setup() {
 }
 
 void loop() {
-  float startTime = millis();
-  while (((millis() - startTime) / 1000) <= 30) {
-    cTime = (millis() - startTime);
+  // sync = digitalRead(SYNC_PIN);
+  
+  sync = 1;
+  
 
-    IMU_reading();
-    p = getAllPressures();
-    printPressureReadings(p);
-    pAvg = (p[0] + p[1] + p[2] + p[3]) / 4;
+  if(sync){
+    syncedTime = millis();
+    if(SERIAL) Serial.println("synced!!");
 
-    Write_SDcard();
-    
-    // serial_plot();
+    while(1)
+    {
+
+
+      unsigned long currentTime = millis();
+      /////// DATA READING STARTS ////////
+
+      if (currentTime - previousTime >= interval) {
+        previousTime = currentTime;
+        cTime = currentTime - previousTime;
+
+        IMU_reading();
+
+        p = getAllPressures();
+        // printPressureReadings(p);
+        if(SERIAL) Serial.println(millis());
+        pAvg = (p[0] + p[1] + p[2] + p[3]) / 4;
+
+        // Write data to SD card
+        Write_SDcard();
+        // serial_plot();
+      }
+    }
   }
+  else{
+    if(SERIAL) Serial.println("vicon not synced!!");
+  }
+
+  
 }
-
-
-
