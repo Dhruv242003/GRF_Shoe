@@ -1,6 +1,18 @@
 
 disp(T2(1:5, :));
 
+%% Add time coloumn in Force Plate data
+fs = 200; 
+dt = 1 / fs; 
+
+Fz = T2FP.Fz; 
+timeFP = (0:length(Fz)-1)' * dt * 1000; % Time in milliseconds
+
+% Add a new field 'currTime' to the existing structure
+T2FP.currTime = timeFP; 
+
+% Optionally, display the updated structure fields
+disp(T2FP(1:5, :));
 
 %%   Single dataset visualization
 
@@ -16,15 +28,14 @@ grid on;
 
 %% Two data set together
 
-
-timeFP = T2FPtime.currTime;
-t = ShoeProcessed.currTime;
+timeFP = T2FP.currTime;
+t = T2.currTime;
 
 figure;
 
 % First subplot for Fz vs timeFP
 subplot(2,1,1); % (2 rows, 1 column, 1st plot)
-plot(timeFP, abs(Fz), 'b', 'LineWidth', 1.5); % Plot Fz in blue
+plot(timeFP, abs(T2FP.Fz), 'b', 'LineWidth', 1.5); % Plot Fz in blue
 title('Plot of Fz vs Time');
 xlabel('Time (ms)');
 ylabel('Fz');
@@ -55,7 +66,7 @@ hold off;
 %% Removing extra values from shoe dataset and equating to zero
 
 % Extract timestamps from the first dataset
-currTime_Fz = T2FPtime.currTime; % Timestamps from the first dataset
+currTime_Fz = T2FP.currTime; % Timestamps from the first dataset
 disp(currTime_Fz);
 
 % Extract timestamps from the second dataset
@@ -92,19 +103,19 @@ disp(T2_modified(1:5, :));
 
 %% Mat file to CSV file
 
-writetable(combinedResult, 'combinedResult.csv');
+writetable(T2_modified, 'T2_modified.csv');
 
 %% Visualization after processing
 
 
-timeFP = T2FPtime.currTime;
-t = ShoeProcessed.currTime;
+timeFP = T2FP.currTime;
+t = T2_modified.currTime;
 
 figure;
 
 % First subplot for Fz vs timeFP
 subplot(2,1,1); % (2 rows, 1 column, 1st plot)
-plot(timeFP, abs(Fz), 'b', 'LineWidth', 1.5); % Plot Fz in blue
+plot(timeFP, abs(T2FP.Fz), 'b', 'LineWidth', 1.5); % Plot Fz in blue
 title('Plot of Fz vs Time');
 xlabel('Time (ms)');
 ylabel('Fz');
@@ -115,10 +126,10 @@ subplot(2,1,2); % (2 rows, 1 column, 2nd plot)
 hold on; % Hold on to plot multiple lines on the same axis
 
 % Plot each variable in a different color
-plot(t, T2.s1, 'r', 'LineWidth', 1.5); % s1 in red
-plot(t, T2.s2, 'g', 'LineWidth', 1.5); % s2 in green
-plot(t, T2.s3, 'm', 'LineWidth', 1.5); % s3 in magenta
-plot(t, T2.s4, 'k', 'LineWidth', 1.5); % s4 in cyan
+plot(t, T2_modified.s1, 'r', 'LineWidth', 1.5); % s1 in red
+plot(t, T2_modified.s2, 'g', 'LineWidth', 1.5); % s2 in green
+plot(t, T2_modified.s3, 'm', 'LineWidth', 1.5); % s3 in magenta
+plot(t, T2_modified.s4, 'k', 'LineWidth', 1.5); % s4 in cyan
 % plot(t, T2Copy.s, 'k', 'LineWidth', 1.5);  % s in black
 
 % Add legends and titles
@@ -133,16 +144,16 @@ hold off;
 
 %% InterPolation
 
-ShoeTime = ShoeProcessed.currTime; % Timestamps from the smaller dataset
+ShoeTime = T2_modified.currTime; % Timestamps from the smaller dataset
 
-FPTime = T2FPtime.currTime;        % Timestamps from the larger dataset
+FPTime = T2FP.currTime;        % Timestamps from the larger dataset
 
 % Extract the data columns (excluding currTime) from T2FPtime
-if istable(T2FPtime)
+if istable(T2FP)
 
-    T2FPtimeArray = table2array(T2FPtime(:, 1:end-1)); % Exclude currTime
+    T2FPtimeArray = table2array(T2FP(:, 1:end-1)); % Exclude currTime
 else
-    T2FPtimeArray = T2FPtime(:, 1:end-1); % If already an array, just use indexing
+    T2FPtimeArray = T2FP(:, 1:end-1); % If already an array, just use indexing
 end
 
 % Initialize a matrix to store the combined data
@@ -158,11 +169,11 @@ for i = 1:length(ShoeTime)
 end
 
 % Convert combinedData to a table and append it to ShoeProcessed
-if istable(ShoeProcessed)
-    combinedResult = [ShoeProcessed, array2table(combinedData, 'VariableNames', T2FPtime.Properties.VariableNames(1:end-1))];
+if istable(T2_modified)
+    combinedResult = [T2_modified, array2table(combinedData, 'VariableNames', T2FP.Properties.VariableNames(1:end-1))];
 else
     % Adjust if ShoeProcessed is not a table
-    combinedResult = [ShoeProcessed, combinedData];
+    combinedResult = [T2_modified, combinedData];
 end
 
 % Display the first few rows of the combined data for verification
