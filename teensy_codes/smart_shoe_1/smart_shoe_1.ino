@@ -46,9 +46,9 @@ void setup() {
 }
 
 void loop() {
-  // sync = digitalRead(SYNC_PIN);
+  sync = digitalRead(SYNC_PIN);
   
-  sync = 1;
+  // sync = 1;
   
 
   if(sync){
@@ -70,7 +70,7 @@ void loop() {
 
         p = getAllPressures();
         // printPressureReadings(p);
-        if(SERIAL) Serial.println(millis());
+        // if(SERIAL) Serial.println(millis());
         pAvg = (p[0] + p[1] + p[2] + p[3]) / 4;
 
         // Write data to SD card
