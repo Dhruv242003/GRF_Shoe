@@ -1,18 +1,25 @@
+load("FPmax.csv");
+load("ShowMax.csv");
 
-disp(squats1Shoe(1:5, :));
+%%
+FP = squats2FPmax;
+Shoe = squats2ShoeMax;
+
+%%
+disp(Shoe(1:5, :));
 
 %% Add time coloumn in Force Plate data
 fs = 200; 
 dt = 1 / fs; 
 
-Fz =  squats1FP.Fz;
+Fz =  FP.Fz;
 timeFP = (0:length(Fz)-1)' * dt * 1000; % Time in milliseconds
 
 % Add a new field 'currTime' to the existing structure
-squats1FP.currTime = timeFP; 
+FP.currTime = timeFP; 
 
 % Optionally, display the updated structure fields
-disp(squats1FP(1:5, :));
+disp(FP(1:5, :));
 
 %%   Single dataset visualization
 
@@ -28,28 +35,31 @@ grid on;
 
 %% Two data set together
 
-timeFP = squats1FP.currTime;
-t = squats1Shoe.currTime;
+timeFP = FP.currTime;
+t = Shoe.currTime;
 
 figure;
 
 % First subplot for Fz vs timeFP
 subplot(2,1,1); % (2 rows, 1 column, 1st plot)
-plot(timeFP, abs(squats1FP.Fz), 'b', 'LineWidth', 1.5); % Plot Fz in blue
+plot(timeFP, abs(FP.Fz), 'b', 'LineWidth', 1.5); % Plot Fz in blue
 title('Plot of Fz vs Time');
 xlabel('Time (ms)');
 ylabel('Fz');
 grid on;
+
+% Set x-axis limits for the first plot
+xlim([6000 max(timeFP)]);
 
 % Second subplot for s1, s2, s3, s4, and s vs currTime
 subplot(2,1,2); % (2 rows, 1 column, 2nd plot)
 hold on; % Hold on to plot multiple lines on the same axis
 
 % Plot each variable in a different color
-plot(t, squats1Shoe.s1, 'r', 'LineWidth', 1.5); % s1 in red
-plot(t, squats1Shoe.s2, 'g', 'LineWidth', 1.5); % s2 in green
-plot(t, squats1Shoe.s3, 'm', 'LineWidth', 1.5); % s3 in magenta
-plot(t, squats1Shoe.s4, 'k', 'LineWidth', 1.5); % s4 in cyan
+plot(t, Shoe.s1, 'r', 'LineWidth', 1.5); % s1 in red
+plot(t, Shoe.s2, 'g', 'LineWidth', 1.5); % s2 in green
+plot(t, Shoe.s3, 'm', 'LineWidth', 1.5); % s3 in magenta
+plot(t, Shoe.s4, 'k', 'LineWidth', 1.5); % s4 in cyan
 % plot(t, T2Copy.s, 'k', 'LineWidth', 1.5);  % s in black
 
 % Add legends and titles
@@ -59,25 +69,29 @@ ylabel('s');
 legend('s1', 's2', 's3', 's4', 's', 'Location', 'best');
 grid on;
 
-hold off; 
+% Set x-axis limits for the second plot to match the first plot
+xlim([6000 max(t)]);
+
+hold off;
+
 
 
 
 %% Removing extra values from shoe dataset and equating to zero
 
 % Extract timestamps from the first dataset
-currTime_Fz = squats1FP.currTime; % Timestamps from the first dataset
+currTime_Fz = FP.currTime; % Timestamps from the first dataset
 disp(currTime_Fz);
 
 % Extract timestamps from the second dataset
-currTime_Second = squats1Shoe.currTime; % Timestamps from the second dataset
+currTime_Second = Shoe.currTime; % Timestamps from the second dataset
 
 % Identify timestamps where Fz is zero
 zeroFzIndices = find(Fz == 0);
 zeroFzTimes = currTime_Fz(zeroFzIndices); % Corresponding timestamps
 
 % Create a copy of the original second dataset
-squats1Shoe_modified = squats1Shoe; % Create a new variable for the modified dataset
+Shoe_modified = Shoe; % Create a new variable for the modified dataset
 
 % Loop through the timestamps with zero Fz and set corresponding values to zero in the modified dataset
 for i = 1:length(zeroFzTimes)
@@ -88,34 +102,34 @@ for i = 1:length(zeroFzTimes)
     [~, matchIndex] = min(abs(currTime_Second - currTimeMatch));
     
     % Set s1, s2, s3, s4, and s to zero for the nearest timestamp found in the modified dataset
-    squats1Shoe_modified.s1(matchIndex) = 0;
-    squats1Shoe_modified.s2(matchIndex) = 0;
-    squats1Shoe_modified.s3(matchIndex) = 0;
-    squats1Shoe_modified.s4(matchIndex) = 0;
-    squats1Shoe_modified.s(matchIndex) = 0;
+    Shoe_modified.s1(matchIndex) = 0;
+    Shoe_modified.s2(matchIndex) = 0;
+    Shoe_modified.s3(matchIndex) = 0;
+    Shoe_modified.s4(matchIndex) = 0;
+    Shoe_modified.s(matchIndex) = 0;
 end
 
 % Optionally, save the updated modified dataset to a new file
 % save('Updated_WithExo_GRF.mat', 'T2_modified');
 
 % Display the updated modified dataset for verification (first 5 rows)
-disp(squats1Shoe_modified(1:5, :));
+disp(Shoe_modified(1:5, :));
 
 %% Mat file to CSV file
 
-writetable(squats1Shoe_modified, 'squats1Shoe_modified.csv');
+writetable(Shoe_modified, 'Shoe_modified.csv');
 
 %% Visualization after processing
 
 
-timeFP = squats1FP.currTime;
-t = squats1Shoe_modified.currTime;
+timeFP = FP.currTime;
+t = Shoe_modified.currTime;
 
 figure;
 
 % First subplot for Fz vs timeFP
 subplot(2,1,1); % (2 rows, 1 column, 1st plot)
-plot(timeFP, abs(squats1FP.Fz), 'b', 'LineWidth', 1.5); % Plot Fz in blue
+plot(timeFP, abs(FP.Fz), 'b', 'LineWidth', 1.5); % Plot Fz in blue
 title('Plot of Fz vs Time');
 xlabel('Time (ms)');
 ylabel('Fz');
@@ -126,10 +140,10 @@ subplot(2,1,2); % (2 rows, 1 column, 2nd plot)
 hold on; % Hold on to plot multiple lines on the same axis
 
 % Plot each variable in a different color
-plot(t, squats1Shoe_modified.s1, 'r', 'LineWidth', 1.5); % s1 in red
-plot(t, squats1Shoe_modified.s2, 'g', 'LineWidth', 1.5); % s2 in green
-plot(t, squats1Shoe_modified.s3, 'm', 'LineWidth', 1.5); % s3 in magenta
-plot(t, squats1Shoe_modified.s4, 'k', 'LineWidth', 1.5); % s4 in cyan
+plot(t, Shoe_modified.s1, 'r', 'LineWidth', 1.5); % s1 in red
+plot(t, Shoe_modified.s2, 'g', 'LineWidth', 1.5); % s2 in green
+plot(t, Shoe_modified.s3, 'm', 'LineWidth', 1.5); % s3 in magenta
+plot(t, Shoe_modified.s4, 'k', 'LineWidth', 1.5); % s4 in cyan
 % plot(t, T2Copy.s, 'k', 'LineWidth', 1.5);  % s in black
 
 % Add legends and titles
@@ -144,16 +158,16 @@ hold off;
 
 %% InterPolation
 
-ShoeTime = squats1Shoe_modified.currTime; % Timestamps from the smaller dataset
+ShoeTime = Shoe_modified.currTime; % Timestamps from the smaller dataset
 
-FPTime = squats1FP.currTime;        % Timestamps from the larger dataset
+FPTime = FP.currTime;        % Timestamps from the larger dataset
 
 % Extract the data columns (excluding currTime) from T2FPtime
-if istable(squats1FP)
+if istable(FP)
 
-    T2FPtimeArray = table2array(squats1FP(:, 1:end-1)); % Exclude currTime
+    T2FPtimeArray = table2array(FP(:, 1:end-1)); % Exclude currTime
 else
-    T2FPtimeArray = squats1FP(:, 1:end-1); % If already an array, just use indexing
+    T2FPtimeArray = FP(:, 1:end-1); % If already an array, just use indexing
 end
 
 % Initialize a matrix to store the combined data
@@ -169,11 +183,11 @@ for i = 1:length(ShoeTime)
 end
 
 % Convert combinedData to a table and append it to ShoeProcessed
-if istable(squats1Shoe_modified)
-    combinedResult = [squats1Shoe_modified, array2table(combinedData, 'VariableNames', squats1FP.Properties.VariableNames(1:end-1))];
+if istable(Shoe_modified)
+    combinedResult = [Shoe_modified, array2table(combinedData, 'VariableNames', FP.Properties.VariableNames(1:end-1))];
 else
     % Adjust if ShoeProcessed is not a table
-    combinedResult = [squats1Shoe_modified, combinedData];
+    combinedResult = [Shoe_modified, combinedData];
 end
 
 % Display the first few rows of the combined data for verification

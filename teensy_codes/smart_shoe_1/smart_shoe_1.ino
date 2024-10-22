@@ -7,6 +7,11 @@ unsigned long interval = 1000 / samplingFrequency;
 unsigned long syncedTime;
 
 #include "globals.h"
+
+
+
+
+
 #include "IMU.h"
 #include "Pressure_Sensor.h"
 #include "SD_Card.h"
