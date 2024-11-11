@@ -39,14 +39,14 @@ void setup() {
 void loop() {
   pcaselect(SENSOR);
   
-  Serial.print(mpr.readPressure(),4);
-  Serial.println(" PSI");
+  // Serial.print(mpr.readPressure(),4);
+  // Serial.println(" PSI");
   // Serial.print(mpr.readPressure(PA),1);
   // Serial.println(" Pa");
   // Serial.print(mpr.readPressure(KPA),4);
   // Serial.println(" kPa");
-  // Serial.print(mpr.readPressure(TORR),3);
-  // Serial.println(" torr");
+  Serial.print(mpr.readPressure(TORR),3);
+  Serial.println(" torr");
   // Serial.print(mpr.readPressure(INHG),4);
   // Serial.println(" inHg");
   // Serial.print(mpr.readPressure(ATM),6);

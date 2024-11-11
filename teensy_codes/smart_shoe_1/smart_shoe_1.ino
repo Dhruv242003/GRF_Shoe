@@ -1,4 +1,4 @@
-#define SERIAL 0
+#define SERIAL 1
 
 unsigned long cTime;
 unsigned long previousTime = 0;
@@ -7,10 +7,6 @@ unsigned long interval = 1000 / samplingFrequency;
 unsigned long syncedTime;
 
 #include "globals.h"
-
-
-
-
 
 #include "IMU.h"
 #include "Pressure_Sensor.h"
@@ -47,16 +43,16 @@ void setup() {
   create_new_file();
   IMU_setup();
   setup_pressure_sensor();
-  delay(5000);
+  delay(1000);
 }
 
 void loop() {
   sync = digitalRead(SYNC_PIN);
   
   // sync = 1;
-  
+  // sync = Serial.parseInt();
 
-  if(sync){
+  if(sync==1){
     syncedTime = millis();
     if(SERIAL) Serial.println("synced!!");
 

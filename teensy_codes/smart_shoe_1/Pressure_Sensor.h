@@ -55,16 +55,16 @@ float* getAllPressures() {
   static float pressures[4];  // Static array to store pressure values from 4 sensors
 
   pcaselect(0);
-  pressures[0] = mpr0.readPressure();
+  pressures[0] = mpr0.readPressure(TORR);
 
   pcaselect(1);
-  pressures[1] = mpr1.readPressure();
+  pressures[1] = mpr1.readPressure(TORR);
 
   pcaselect(2);
-  pressures[2] = mpr2.readPressure();
+  pressures[2] = mpr2.readPressure(TORR);
 
   pcaselect(3);
-  pressures[3] = mpr3.readPressure();
+  pressures[3] = mpr3.readPressure(TORR);
 
   return pressures;  // Return the array with the pressure values
 }
@@ -83,7 +83,7 @@ void printPressureReadings(float* pressureArray) {
       Serial.print(i);
       Serial.print(": ");
       Serial.print(pressureArray[i], 2);  // Print the value with 2 decimal places
-      Serial.println(" Pa");              // Assuming the pressure is in Pascals (Pa)
+      Serial.println(" Torr");              // Assuming the pressure is in Pascals (Pa)
     }
 
     Serial.println("=========================");

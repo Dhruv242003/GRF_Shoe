@@ -2,8 +2,8 @@ load("FPmax.csv");
 load("ShowMax.csv");
 
 %%
-FP = squats2FPmax;
-Shoe = squats2ShoeMax;
+FP = arpeet;
+Shoe = DATA09;
 
 %%
 disp(Shoe(1:5, :));
@@ -49,7 +49,7 @@ ylabel('Fz');
 grid on;
 
 % Set x-axis limits for the first plot
-xlim([6000 max(timeFP)]);
+% xlim([0 max(timeFP)]);
 
 % Second subplot for s1, s2, s3, s4, and s vs currTime
 subplot(2,1,2); % (2 rows, 1 column, 2nd plot)
@@ -70,12 +70,9 @@ legend('s1', 's2', 's3', 's4', 's', 'Location', 'best');
 grid on;
 
 % Set x-axis limits for the second plot to match the first plot
-xlim([6000 max(t)]);
+% xlim([0 max(t)]);
 
 hold off;
-
-
-
 
 %% Removing extra values from shoe dataset and equating to zero
 
@@ -117,7 +114,7 @@ disp(Shoe_modified(1:5, :));
 
 %% Mat file to CSV file
 
-writetable(Shoe_modified, 'Shoe_modified.csv');
+writetable(Shoe_modified, 'arp/Shoe_modified.csv');
 
 %% Visualization after processing
 
@@ -193,11 +190,17 @@ end
 % Display the first few rows of the combined data for verification
 disp(combinedResult(1:5, :));
 
+%% Adding weight of subject
+
+weight = repmat(70.0, height(combinedResult), 1);
+combinedResult.Weight = weight;
 
 
 %%
 
-writetable(combinedResult, 'combinedResult.csv');
+% Filter rows where s is not equal to 0
+combinedResult = combinedResult(combinedResult.s ~= 0, :);
+writetable(combinedResult, 'arp/combinedResult.csv');
 %%
 
 %%
