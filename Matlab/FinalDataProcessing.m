@@ -33,6 +33,34 @@ xlabel('Time (ms)');
 ylabel('Fz');
 grid on;
 
+%%
+% Second plot for s1, s2, s3, s4, and s vs currTime
+figure; % Create a new figure
+
+hold on; % Hold on to plot multiple lines on the same axis
+
+% Plot each variable in a different color
+plot(t, Shoe.s1, 'k', 'LineWidth', 1.5); % s1 in red
+plot(t, Shoe.s2, 'g', 'LineWidth', 1.5); % s2 in green
+plot(t, Shoe.s3, 'm', 'LineWidth', 1.5); % s3 in magenta
+plot(t, Shoe.s4, 'k', 'LineWidth', 1.5); % s4 in cyan
+% plot(t, T2Copy.s, 'k', 'LineWidth', 1.5);  % s in black
+
+% Add legends and titles
+title('Plot of s1, s2, s3, s4, and s vs Time');
+xlabel('Time');
+ylabel('s');
+ylim([700 900]);
+xlim([20000,70000]);
+legend('s1', 's2', 's3', 's4', 's', 'Location', 'best');
+grid on;
+
+% Set x-axis limits if needed (optional)
+% xlim([0 max(t)]);
+
+hold off;
+
+
 %% Two data set together
 
 timeFP = FP.currTime;
@@ -142,7 +170,8 @@ plot(t, Shoe_modified.s2, 'g', 'LineWidth', 1.5); % s2 in green
 plot(t, Shoe_modified.s3, 'm', 'LineWidth', 1.5); % s3 in magenta
 plot(t, Shoe_modified.s4, 'k', 'LineWidth', 1.5); % s4 in cyan
 % plot(t, T2Copy.s, 'k', 'LineWidth', 1.5);  % s in black
-
+ylim([700, 850]);
+xlim([0, max(t)]);
 % Add legends and titles
 title('Plot of s1, s2, s3, s4, and s vs Time');
 xlabel('Time');
