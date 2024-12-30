@@ -2,8 +2,10 @@ load("FPmax.csv");
 load("ShowMax.csv");
 
 %%
-FP = arpeet;
-Shoe = DATA09;
+FP = DharmeshsitToStandFP;
+Shoe = DharmeshSitToStand;
+basePath = 'sitToStand\Dharmesh';
+weight = 72;
 
 %%
 disp(Shoe(1:5, :));
@@ -32,34 +34,6 @@ title('Plot of Fz vs Time');
 xlabel('Time (ms)');
 ylabel('Fz');
 grid on;
-
-%%
-% Second plot for s1, s2, s3, s4, and s vs currTime
-figure; % Create a new figure
-
-hold on; % Hold on to plot multiple lines on the same axis
-
-% Plot each variable in a different color
-plot(t, Shoe.s1, 'k', 'LineWidth', 1.5); % s1 in red
-plot(t, Shoe.s2, 'g', 'LineWidth', 1.5); % s2 in green
-plot(t, Shoe.s3, 'm', 'LineWidth', 1.5); % s3 in magenta
-plot(t, Shoe.s4, 'k', 'LineWidth', 1.5); % s4 in cyan
-% plot(t, T2Copy.s, 'k', 'LineWidth', 1.5);  % s in black
-
-% Add legends and titles
-title('Plot of s1, s2, s3, s4, and s vs Time');
-xlabel('Time');
-ylabel('s');
-ylim([700 900]);
-xlim([20000,70000]);
-legend('s1', 's2', 's3', 's4', 's', 'Location', 'best');
-grid on;
-
-% Set x-axis limits if needed (optional)
-% xlim([0 max(t)]);
-
-hold off;
-
 
 %% Two data set together
 
@@ -94,10 +68,37 @@ plot(t, Shoe.s4, 'k', 'LineWidth', 1.5); % s4 in cyan
 title('Plot of s1, s2, s3, s4, and s vs Time');
 xlabel('Time');
 ylabel('s');
-legend('s1', 's2', 's3', 's4', 's', 'Location', 'best');
+legend('Heel', 'Meta 45', 'Toe ', 'Meta 12', 'Avg', 'Location', 'best');
 grid on;
 
 % Set x-axis limits for the second plot to match the first plot
+% xlim([0 max(t)]);
+
+hold off;
+
+%%
+% Second plot for s1, s2, s3, s4, and s vs currTime
+figure; % Create a new figure
+
+hold on; % Hold on to plot multiple lines on the same axis
+
+% Plot each variable in a different color
+plot(t, Shoe.s1, 'k', 'LineWidth', 1.5); % s1 in red
+plot(t, Shoe.s2, 'g', 'LineWidth', 1.5); % s2 in green
+plot(t, Shoe.s3, 'm', 'LineWidth', 1.5); % s3 in magenta
+plot(t, Shoe.s4, 'k', 'LineWidth', 1.5); % s4 in cyan
+% plot(t, T2Copy.s, 'k', 'LineWidth', 1.5);  % s in black
+
+% Add legends and titles
+title('Plot of s1, s2, s3, s4, and s vs Time');
+xlabel('Time');
+ylabel('s');
+ylim([700 900]);
+xlim([20000,70000]);
+legend('s1', 's2', 's3', 's4', 's', 'Location', 'best');
+grid on;
+
+% Set x-axis limits if needed (optional)
 % xlim([0 max(t)]);
 
 hold off;
@@ -142,7 +143,7 @@ disp(Shoe_modified(1:5, :));
 
 %% Mat file to CSV file
 
-writetable(Shoe_modified, 'arp/Shoe_modified.csv');
+writetable(Shoe_modified, fullfile(basePath,'Shoe_modified.csv'));
 
 %% Visualization after processing
 
@@ -221,7 +222,7 @@ disp(combinedResult(1:5, :));
 
 %% Adding weight of subject
 
-weight = repmat(70.0, height(combinedResult), 1);
+weight = repmat(weight, height(combinedResult), 1);
 combinedResult.Weight = weight;
 
 
@@ -229,7 +230,7 @@ combinedResult.Weight = weight;
 
 % Filter rows where s is not equal to 0
 combinedResult = combinedResult(combinedResult.s ~= 0, :);
-writetable(combinedResult, 'arp/combinedResult.csv');
+writetable(combinedResult, fullfile(basePath,'combinedResult.csv'));
 %%
 
 %%

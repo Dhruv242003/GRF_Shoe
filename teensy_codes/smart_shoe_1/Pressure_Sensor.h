@@ -17,7 +17,7 @@ void setup_pressure_sensor() {
   delay(1000);
   Wire.begin();
 
-  pcaselect(0);
+  pcaselect(0);  // Heel
   mpr0.begin();
   if (!mpr0.begin()) {
     if (SERIAL) Serial.println("Pressure sensor 0 is not ready.");
@@ -25,7 +25,7 @@ void setup_pressure_sensor() {
       ;
   }
 
-  pcaselect(1);
+  pcaselect(1);   // Meta 45 
   mpr1.begin();
   if (!mpr1.begin()) {
     if (SERIAL) Serial.println("Pressure sensor 1 is not ready.");
@@ -33,7 +33,7 @@ void setup_pressure_sensor() {
       ;
   }
 
-  pcaselect(2);
+  pcaselect(2);  // Toe 
   mpr2.begin();
   if (!mpr2.begin()) {
     if (SERIAL) Serial.println("Pressure sensor 2 is not ready.");
@@ -41,7 +41,7 @@ void setup_pressure_sensor() {
       ;
   }
 
-  pcaselect(3);
+  pcaselect(3);   // Meta 12
   mpr3.begin();
   if (!mpr3.begin()) {
     if (SERIAL) Serial.println("Pressure sensor 3 is not ready.");
