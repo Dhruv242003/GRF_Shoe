@@ -25,7 +25,7 @@ void setup_pressure_sensor() {
       ;
   }
 
-  pcaselect(1);   // Meta 45 
+  pcaselect(1);  // Meta 45
   mpr1.begin();
   if (!mpr1.begin()) {
     if (SERIAL) Serial.println("Pressure sensor 1 is not ready.");
@@ -33,7 +33,7 @@ void setup_pressure_sensor() {
       ;
   }
 
-  pcaselect(2);  // Toe 
+  pcaselect(2);  // Toe
   mpr2.begin();
   if (!mpr2.begin()) {
     if (SERIAL) Serial.println("Pressure sensor 2 is not ready.");
@@ -41,7 +41,7 @@ void setup_pressure_sensor() {
       ;
   }
 
-  pcaselect(3);   // Meta 12
+  pcaselect(3);  // Meta 12
   mpr3.begin();
   if (!mpr3.begin()) {
     if (SERIAL) Serial.println("Pressure sensor 3 is not ready.");
@@ -52,19 +52,34 @@ void setup_pressure_sensor() {
 
 
 float* getAllPressures() {
+
   static float pressures[4];  // Static array to store pressure values from 4 sensors
 
-  pcaselect(0);
-  pressures[0] = mpr0.readPressure(TORR);
+  if (shoe == RIGHT) {
+    pcaselect(0);
+    pressures[0] = mpr0.readPressure(TORR);
 
-  pcaselect(1);
-  pressures[1] = mpr1.readPressure(TORR);
+    pcaselect(1);
+    pressures[1] = mpr1.readPressure(TORR);
 
-  pcaselect(2);
-  pressures[2] = mpr2.readPressure(TORR);
+    pcaselect(2);
+    pressures[2] = mpr2.readPressure(TORR);
 
-  pcaselect(3);
-  pressures[3] = mpr3.readPressure(TORR);
+    pcaselect(3);
+    pressures[3] = mpr3.readPressure(TORR);
+  } else if (shoe == LEFT) {
+    pcaselect(0);
+    pressures[3] = mpr0.readPressure(TORR);
+
+    pcaselect(1);
+    pressures[2] = mpr1.readPressure(TORR);
+
+    pcaselect(2);
+    pressures[1] = mpr2.readPressure(TORR);
+
+    pcaselect(3);
+    pressures[0] = mpr3.readPressure(TORR);
+  }
 
   return pressures;  // Return the array with the pressure values
 }
@@ -83,7 +98,7 @@ void printPressureReadings(float* pressureArray) {
       Serial.print(i);
       Serial.print(": ");
       Serial.print(pressureArray[i], 2);  // Print the value with 2 decimal places
-      Serial.println(" Torr");              // Assuming the pressure is in Pascals (Pa)
+      Serial.println(" Torr");            // Assuming the pressure is in Pascals (Pa)
     }
 
     Serial.println("=========================");

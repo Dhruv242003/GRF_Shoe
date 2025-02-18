@@ -1,4 +1,8 @@
+
+#include "globals.h"
 #define SERIAL 1
+
+int shoe = LEFT;
 
 unsigned long cTime;
 unsigned long previousTime = 0;
@@ -6,7 +10,6 @@ const int samplingFrequency = 200;
 unsigned long interval = 1000 / samplingFrequency;
 unsigned long syncedTime;
 
-#include "globals.h"
 
 #include "IMU.h"
 #include "Pressure_Sensor.h"
@@ -14,6 +17,8 @@ unsigned long syncedTime;
 
 #define SYNC_PIN 20
 int sync;
+
+#define DISABLE_SENSOR -1
 
 
 void serial_plot() {

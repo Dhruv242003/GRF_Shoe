@@ -2,10 +2,10 @@ load("FPmax.csv");
 load("ShowMax.csv");
 
 %%
-FP = DharmeshsitToStandFP;
-Shoe = DharmeshSitToStand;
-basePath = 'sitToStand\Dharmesh';
-weight = 72;
+FP = arpeet;
+Shoe = DATA09;
+basePath = 'Data\TorrTrials\arp';
+weight = 70;
 
 %%
 disp(Shoe(1:5, :));
