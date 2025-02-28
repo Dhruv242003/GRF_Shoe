@@ -32,8 +32,36 @@ figure;
 plot(timeFP, abs(Fz), 'b', 'LineWidth', 1.5); % Plot Fz in blue
 title('Plot of Fz vs Time');
 xlabel('Time (ms)');
-ylabel('Fz');
+xlim([23000 ,29500]);
+ylim([200 ,500]);
+ylabel('Fz (N)');
 grid on;
+
+
+
+%%
+
+% Define the x-axis limits
+x_start = 26500;
+x_end = 29500;
+
+% Create a figure
+figure;
+
+% Plot Fz vs timeFP
+plot(timeFP, abs(Fz), 'b', 'LineWidth', 1.5); % Plot Fz in blue
+title('Plot of Fz vs Time');
+xlabel('Time (ms)');
+ylabel('Fz (N)');
+grid on;
+
+% Set x-axis limits
+xlim([x_start, x_end]);
+
+% Adjust x-axis ticks to start from zero
+xticks(linspace(x_start, x_end, 6)); % Adjust the number of ticks as needed
+xticklabels(linspace(0, x_end - x_start, 6)); % Relabel ticks starting from zero
+
 
 %% Two data set together
 

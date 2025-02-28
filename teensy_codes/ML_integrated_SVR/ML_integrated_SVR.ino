@@ -1,6 +1,6 @@
 
 #include "globals.h"
-#define SERIAL 0   // 1 for serial monitor on and 0 for serial monitor off 
+#define SERIAL 1  // 1 for serial monitor on and 0 for serial monitor off 
 
 int shoe = LEFT;   // LEFT for left shoe and RIGHT for right shoe
 
@@ -15,6 +15,9 @@ unsigned long syncedTime;
 #include "IMU.h"
 #include "Pressure_Sensor.h"
 #include "SD_Card.h"
+#include "svr_model.h"
+#include "scaling_params.h"
+#include "svr.h"
 
 #define SYNC_PIN 20
 int sync;
@@ -53,9 +56,9 @@ void setup() {
 }
 
 void loop() {
-  sync = digitalRead(SYNC_PIN);
+  // sync = digitalRead(SYNC_PIN);
   
-  // sync = 1;
+  sync = 1;
   // sync = Serial.parseInt();
 
   if(sync==1){
@@ -74,14 +77,24 @@ void loop() {
         cTime = currentTime - previousTime;
 
         IMU_reading();
-
+        
+        // Read pressure sensor values
         p = getAllPressures();
-        // printPressureReadings(p);
-        // if(SERIAL) Serial.println(millis());
-        pAvg = (p[0] + p[1] + p[2] + p[3]) / 4;
+        printPressureReadings(p); 
+
+        // Standardize sensor values BEFORE passing to svr_predict
+        standardize(p, scaled_features, num_features);
+
+        // Use scaled features in SVR prediction
+        predicted_value = svr_predict(scaled_features);
+
+        if (SERIAL) {
+          Serial.print("Predicted Value: ");
+          Serial.println(predicted_value);
+        }
 
         // Write data to SD card
-        Write_SDcard();
+        // Write_SDcard();
         // serial_plot();
       }
     }

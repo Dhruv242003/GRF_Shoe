@@ -4,7 +4,7 @@
 #include <SparkFun_MicroPressure.h>
 #include <WiFi.h>
 #include <string.h>
-//#include "MicroFlow.h"
+#include "MicroFlow.h"
 
 #define AD0_VAL 1  
 
@@ -94,9 +94,9 @@ void setup(){
 // Wifi Syncing +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
   Serial.println("It is connecting...");
-  pinMode(LEDR,LOW);
-  pinMode(LEDG,HIGH);
-  pinMode(LEDB,LOW);
+  // pinMode(LEDR,LOW);
+  // pinMode(LEDG,HIGH);
+  // pinMode(LEDB,LOW);
   Serial.println("Still connecting...");
   
   status = WiFi.begin(ssid,password);
