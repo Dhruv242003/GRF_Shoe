@@ -1,8 +1,8 @@
 %%
 % Froce Plate Data extraction
 
-FP_data = sitting;
-basePath = 'Data\TwoShoes\Krunal\sitting';
+FP_data = sittostand;
+basePath = 'Data\TwoShoes\Krunal\sitToStand';
 weight = 82;
 
 
@@ -57,8 +57,8 @@ grid on;
 
 
 %% SHOE DATA IMPORTING
-Left_shoe = LEFTDATA00;
-Right_shoe = RIGHTDATA00;
+Left_shoe = LEFTDATA01;
+Right_shoe = RIGHTDATA01;
 
 %% Truncating the size of bigger shoe data
 
