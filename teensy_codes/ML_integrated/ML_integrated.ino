@@ -27,6 +27,7 @@ void standardize(float input[], float output[], int size) {
   }
 }
 
+
 // Prediction function
 float predict(float scaled_input[], int size) {
   float result = intercept;

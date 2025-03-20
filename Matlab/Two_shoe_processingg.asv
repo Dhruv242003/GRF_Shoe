@@ -1,9 +1,9 @@
 %%
 % Froce Plate Data extraction
 
-FP_data = sitting;
-basePath = 'Data\TwoShoes\Krunal\sitting';
-weight = 82;
+FP_data = squatting;
+basePath = 'Data\TwoShoes\Karan\Squatting';
+weight = 64;
 
 
 %%
@@ -57,8 +57,8 @@ grid on;
 
 
 %% SHOE DATA IMPORTING
-Left_shoe = LEFTDATA00;
-Right_shoe = RIGHTDATA00;
+Left_shoe = LEFTDATA05;
+Right_shoe = RIGHTDATA05;
 
 %% Truncating the size of bigger shoe data
 
@@ -369,10 +369,3 @@ Right_shoe_processed = removevars(Right_shoe_processed, {'Fx1','Fy1','Fz1', 'Mx1
 writetable(Left_shoe_processed, fullfile(basePath,'Left_shoe_processed.csv'));
 writetable(Right_shoe_processed, fullfile(basePath,'Right_shoe_processed.csv'));
 
-
-
-%%
-
-%%
-
-%%

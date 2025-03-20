@@ -1,9 +1,9 @@
 %%
 % Froce Plate Data extraction
 
-FP_data = sittostand;
-basePath = 'Data\TwoShoes\Krunal\sitToStand';
-weight = 82;
+FP_data = standing;
+basePath = 'Data\TwoShoes\Prasanna\standing';
+weight = 70;
 
 
 %%
@@ -71,9 +71,9 @@ Right_shoe = Right_shoe(Right_shoe.currTime <= min_time, :);
 
 
 %%
-plot(Left_shoe.s);
+plot(Left_shoe.GRF);
 hold on;
-plot(Right_shoe.s);
+plot(Right_shoe.GRF);
 hold off;
 
 %% Left force Plate and Left Shoe
@@ -141,6 +141,9 @@ figure;
 % Left Foot Force Plate
 subplot(2,2,1);
 plot(FP_data.currTime, abs(Fz_Left), 'b', 'LineWidth', 1.5);
+yline(weight*9.8, '--r', 'Body Weight'); % Add horizontal line for full body weight
+yline(0.5*weight*9.8, '--o', 'Half Body Weight'); % Add horizontal line for half body weight
+ylim([0, max(max(abs(Fz_Left)), weight*9.8) + 50]); % Fix y-axis with margin
 title('Fz Left Force Plate vs Time');
 xlabel('Time (ms)');
 ylabel('Force (N)');
@@ -163,6 +166,9 @@ hold off;
 % Right Foot Force Plate
 subplot(2,2,2);
 plot(FP_data.currTime, abs(Fz_Right), 'b', 'LineWidth', 1.5);
+yline(weight*9.8, '--r', 'Body Weight'); % Add horizontal line for full body weight
+yline(0.5*weight*9.8, '--o', 'Half Body Weight'); % Add horizontal line for half body weight
+ylim([0, max(max(abs(Fz_Right)), weight*9.8) + 50]); % Fix y-axis with margin
 title('Fz Right Force Plate vs Time');
 xlabel('Time (ms)');
 ylabel('Force (N)');
@@ -183,6 +189,8 @@ grid on;
 hold off;
 
 sgtitle('Force Plate and Shoe Pressure Comparison');
+
+
 
 %% Removing extra values from shoe dataset and equating to zero
 
@@ -241,6 +249,8 @@ figure;
 % Left Foot Force Plate
 subplot(2,2,1);
 plot(FP_data.currTime, abs(Fz_Left), 'b', 'LineWidth', 1.5);
+yline(weight*9.8, '--r', 'Body Weight'); % Add horizontal line for body weight
+ylim([0, max(max(abs(Fz_Left)), weight*9.8) + 50]); % Fix y-axis with margin
 title('Fz Left Force Plate vs Time');
 xlabel('Time (ms)');
 ylabel('Force (N)');
@@ -263,6 +273,8 @@ hold off;
 % Right Foot Force Plate
 subplot(2,2,2);
 plot(FP_data.currTime, abs(Fz_Right), 'b', 'LineWidth', 1.5);
+yline(weight*9.8, '--r', 'Body Weight'); % Add horizontal line for body weight
+ylim([0, max(max(abs(Fz_Right)), weight*9.8) + 50]); % Fix y-axis with margin
 title('Fz Right Force Plate vs Time');
 xlabel('Time (ms)');
 ylabel('Force (N)');

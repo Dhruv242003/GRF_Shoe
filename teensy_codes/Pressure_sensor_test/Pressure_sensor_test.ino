@@ -3,7 +3,7 @@
 
 #define PCAADDR 0x70
 
-#define SENSOR 3
+#define SENSOR 2
 
 void pcaselect(uint8_t i) {
   if (i > 3) return;
