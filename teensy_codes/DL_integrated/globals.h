@@ -59,15 +59,15 @@ char fileName[22] = FILE_BASE_NAME "00.csv";
 
 // ########### NORMALIZATION OF TWO SHOES #################
 
-#define DEFAULT_PRESSURE 750
 
+// Constants to make defalut pressure 750
 
-float right_heel = DEFAULT_PRESSURE - 750.95;
-float right_meta45 = DEFAULT_PRESSURE - 754.08;
-float right_toe = DEFAULT_PRESSURE - 754.35;
-float right_meta12 = DEFAULT_PRESSURE - 755.71;
+float right_heel = -0.94;
+float right_meta45 = -4.08;
+float right_toe = -4.35;
+float right_meta12 = - 5.71;
 
-float left_heel = DEFAULT_PRESSURE - 751.2;
-float left_meta45 = DEFAULT_PRESSURE - 755.0;
-float left_toe = DEFAULT_PRESSURE - 753.00;
-float left_meta12 = DEFAULT_PRESSURE - 754.10;
+float left_heel = -1.2;
+float left_meta45 = -5.0;
+float left_toe = -3.00;
+float left_meta12 = -4.10;
