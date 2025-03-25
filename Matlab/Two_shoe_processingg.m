@@ -2,7 +2,7 @@
 % Froce Plate Data extraction
 
 FP_data = standing;
-basePath = 'Data\TwoShoes\Prasanna\standing';
+basePath = 'Data\test';
 weight = 70;
 
 
@@ -57,8 +57,8 @@ grid on;
 
 
 %% SHOE DATA IMPORTING
-Left_shoe = LEFTDATA01;
-Right_shoe = RIGHTDATA01;
+Left_shoe = LEFTDATA04;
+Right_shoe = RIGHTDATA04;
 
 %% Truncating the size of bigger shoe data
 
@@ -75,6 +75,101 @@ plot(Left_shoe.GRF);
 hold on;
 plot(Right_shoe.GRF);
 hold off;
+
+%% ONLY PRESSURE SENSOR VALUES
+figure;
+
+% Left Shoe Pressure Sensors
+subplot(2,1,1);
+hold on;
+plot(Left_shoe.currTime, Left_shoe.s1, 'r', 'LineWidth', 1.5);
+plot(Left_shoe.currTime, Left_shoe.s2, 'g', 'LineWidth', 1.5);
+plot(Left_shoe.currTime, Left_shoe.s3, 'm', 'LineWidth', 1.5); 
+plot(Left_shoe.currTime, Left_shoe.s4, 'k', 'LineWidth', 1.5); 
+title('Left Shoe Pressure vs Time');
+xlabel('Time (ms)');
+ylabel('Pressure (Torr)');
+ylim([740, 760]);
+legend('Heel', 'Meta 45', 'Toe', 'Meta 12', 'Location', 'best');
+grid on;
+hold off;
+
+% Right Shoe Pressure Sensors
+subplot(2,1,2);
+hold on;
+plot(Right_shoe.currTime, Right_shoe.s1, 'r', 'LineWidth', 1.5);
+plot(Right_shoe.currTime, Right_shoe.s2, 'g', 'LineWidth', 1.5);
+plot(Right_shoe.currTime, Right_shoe.s3, 'm', 'LineWidth', 1.5); 
+plot(Right_shoe.currTime, Right_shoe.s4, 'k', 'LineWidth', 1.5); 
+title('Right Shoe Pressure vs Time');
+xlabel('Time (ms)');
+ylabel('Pressure (Torr)');
+ylim([740, 760]);
+legend('Heel', 'Meta 45', 'Toe', 'Meta 12', 'Location', 'best');
+grid on;
+hold off;
+
+sgtitle('Shoe Pressure Sensor Data');
+
+%% PRESSUE SENSOR VALUES WITH AVERAGE PRESSURE 
+figure;
+
+% Compute averages
+avg_L1 = mean(Left_shoe.s1);
+avg_L2 = mean(Left_shoe.s2);
+avg_L3 = mean(Left_shoe.s3);
+avg_L4 = mean(Left_shoe.s4);
+
+avg_R1 = mean(Right_shoe.s1);
+avg_R2 = mean(Right_shoe.s2);
+avg_R3 = mean(Right_shoe.s3);
+avg_R4 = mean(Right_shoe.s4);
+
+% Left Shoe Pressure Sensors
+subplot(2,1,1);
+hold on;
+plot(Left_shoe.currTime, Left_shoe.s1, 'r', 'LineWidth', 1.5);
+plot(Left_shoe.currTime, Left_shoe.s2, 'g', 'LineWidth', 1.5);
+plot(Left_shoe.currTime, Left_shoe.s3, 'm', 'LineWidth', 1.5); 
+plot(Left_shoe.currTime, Left_shoe.s4, 'k', 'LineWidth', 1.5); 
+ylim([740, 760]); % Set y-axis limits
+title('Left Shoe Pressure vs Time');
+xlabel('Time (ms)');
+ylabel('Pressure (Torr)');
+legend('Heel', 'Meta 45', 'Toe', 'Meta 12', 'Location', 'best');
+grid on;
+
+% Display average values
+text(Left_shoe.currTime(end), avg_L1, sprintf('%.2f', avg_L1), 'Color', 'r', 'FontSize', 10, 'FontWeight', 'bold');
+text(Left_shoe.currTime(end), avg_L2, sprintf('%.2f', avg_L2), 'Color', 'g', 'FontSize', 10, 'FontWeight', 'bold');
+text(Left_shoe.currTime(end), avg_L3, sprintf('%.2f', avg_L3), 'Color', 'm', 'FontSize', 10, 'FontWeight', 'bold');
+text(Left_shoe.currTime(end), avg_L4, sprintf('%.2f', avg_L4), 'Color', 'k', 'FontSize', 10, 'FontWeight', 'bold');
+hold off;
+
+% Right Shoe Pressure Sensors
+subplot(2,1,2);
+hold on;
+plot(Right_shoe.currTime, Right_shoe.s1, 'r', 'LineWidth', 1.5);
+plot(Right_shoe.currTime, Right_shoe.s2, 'g', 'LineWidth', 1.5);
+plot(Right_shoe.currTime, Right_shoe.s3, 'm', 'LineWidth', 1.5); 
+plot(Right_shoe.currTime, Right_shoe.s4, 'k', 'LineWidth', 1.5); 
+ylim([740, 760]); % Set y-axis limits
+title('Right Shoe Pressure vs Time');
+xlabel('Time (ms)');
+ylabel('Pressure (Torr)');
+legend('Heel', 'Meta 45', 'Toe', 'Meta 12', 'Location', 'best');
+grid on;
+
+% Display average values
+text(Right_shoe.currTime(end), avg_R1, sprintf('%.2f', avg_R1), 'Color', 'r', 'FontSize', 10, 'FontWeight', 'bold');
+text(Right_shoe.currTime(end), avg_R2, sprintf('%.2f', avg_R2), 'Color', 'g', 'FontSize', 10, 'FontWeight', 'bold');
+text(Right_shoe.currTime(end), avg_R3, sprintf('%.2f', avg_R3), 'Color', 'm', 'FontSize', 10, 'FontWeight', 'bold');
+text(Right_shoe.currTime(end), avg_R4, sprintf('%.2f', avg_R4), 'Color', 'k', 'FontSize', 10, 'FontWeight', 'bold');
+hold off;
+
+sgtitle('Shoe Pressure Sensor Data');
+
+
 
 %% Left force Plate and Left Shoe
 

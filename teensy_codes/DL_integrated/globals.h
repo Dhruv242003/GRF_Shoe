@@ -1,4 +1,4 @@
-//   #### variables 
+//   #### variables
 #define LEFT 1
 #define RIGHT 2
 
@@ -40,8 +40,8 @@ float s1, s2, s3, s4, s = 0;
 const int chipSelect = BUILTIN_SDCARD;  // Teensy 4.1 SD card built-in CS pin
 
 File file;
-// #define FILE_BASE_NAME "LEFT_DATA"
-#define FILE_BASE_NAME "RIGHT_DATA"
+#define FILE_BASE_NAME "LEFT_DATA"
+// #define FILE_BASE_NAME "RIGHT_DATA"
 char fileName[22] = FILE_BASE_NAME "00.csv";
 
 
@@ -57,6 +57,17 @@ char fileName[22] = FILE_BASE_NAME "00.csv";
 // int current_value_4;
 
 
+// ########### NORMALIZATION OF TWO SHOES #################
+
+#define DEFAULT_PRESSURE 750
 
 
+float right_heel = DEFAULT_PRESSURE - 750.95;
+float right_meta45 = DEFAULT_PRESSURE - 754.08;
+float right_toe = DEFAULT_PRESSURE - 754.35;
+float right_meta12 = DEFAULT_PRESSURE - 755.71;
 
+float left_heel = DEFAULT_PRESSURE - 751.2;
+float left_meta45 = DEFAULT_PRESSURE - 755.0;
+float left_toe = DEFAULT_PRESSURE - 753.00;
+float left_meta12 = DEFAULT_PRESSURE - 754.10;

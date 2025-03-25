@@ -53,9 +53,9 @@ void setup() {
 }
 
 void loop() {
-  sync = digitalRead(SYNC_PIN);
+  // sync = digitalRead(SYNC_PIN);
   
-  // sync = 1;
+  sync = 1;
   // sync = Serial.parseInt();
 
   if(sync==1){

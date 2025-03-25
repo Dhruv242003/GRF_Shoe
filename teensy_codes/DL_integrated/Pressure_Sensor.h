@@ -59,28 +59,28 @@ float* getAllPressures() {
 
   if (shoe == RIGHT) {
     pcaselect(0);
-    pressures[0] = mpr0.readPressure(TORR);
+    pressures[0] = right_heel + mpr0.readPressure(TORR);
 
     pcaselect(1);
-    pressures[1] = mpr1.readPressure(TORR);
+    pressures[1] = right_meta45 + mpr1.readPressure(TORR);
 
     pcaselect(2);
-    pressures[2] = mpr2.readPressure(TORR);
+    pressures[2] = right_toe + mpr2.readPressure(TORR);
 
     pcaselect(3);
-    pressures[3] = mpr3.readPressure(TORR);
+    pressures[3] = right_meta12 + mpr3.readPressure(TORR);
   } else if (shoe == LEFT) {
-    pcaselect(0);
-    pressures[3] = mpr0.readPressure(TORR);
-
-    pcaselect(1);
-    pressures[2] = mpr1.readPressure(TORR);
+    pcaselect(3);
+    pressures[0] = left_heel + mpr3.readPressure(TORR);
 
     pcaselect(2);
-    pressures[1] = mpr2.readPressure(TORR);
+    pressures[1] = left_meta45 + mpr2.readPressure(TORR);
 
-    pcaselect(3);
-    pressures[0] = mpr3.readPressure(TORR);
+    pcaselect(1);
+    pressures[2] = left_toe + mpr1.readPressure(TORR);
+
+    pcaselect(0);
+    pressures[3] = left_meta12 + mpr0.readPressure(TORR);
   }
 
   return pressures;  // Return the array with the pressure values
