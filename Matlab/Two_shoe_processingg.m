@@ -57,8 +57,8 @@ grid on;
 
 
 %% SHOE DATA IMPORTING
-Left_shoe = LEFTDATA04;
-Right_shoe = RIGHTDATA04;
+Left_shoe = LEFTDATA00;
+Right_shoe = RIGHTDATA00;
 
 %% Truncating the size of bigger shoe data
 
@@ -89,7 +89,7 @@ plot(Left_shoe.currTime, Left_shoe.s4, 'k', 'LineWidth', 1.5);
 title('Left Shoe Pressure vs Time');
 xlabel('Time (ms)');
 ylabel('Pressure (Torr)');
-ylim([740, 760]);
+ylim([740, 830]);
 legend('Heel', 'Meta 45', 'Toe', 'Meta 12', 'Location', 'best');
 grid on;
 hold off;
@@ -104,7 +104,7 @@ plot(Right_shoe.currTime, Right_shoe.s4, 'k', 'LineWidth', 1.5);
 title('Right Shoe Pressure vs Time');
 xlabel('Time (ms)');
 ylabel('Pressure (Torr)');
-ylim([740, 760]);
+ylim([740, 830]);
 legend('Heel', 'Meta 45', 'Toe', 'Meta 12', 'Location', 'best');
 grid on;
 hold off;

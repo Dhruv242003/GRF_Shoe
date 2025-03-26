@@ -37,9 +37,9 @@ void setup() {
 }
 
 void loop() {
-  // sync = digitalRead(SYNC_PIN);
+  sync = digitalRead(SYNC_PIN);
 
-  sync = 1;
+  // sync = 1;
 
 
   if (sync == 1) {
